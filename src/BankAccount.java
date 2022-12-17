@@ -9,7 +9,7 @@ import org.json.simple.parser.JSONParser;
 
 public class BankAccount {
 	
-	protected String firstName;
+	protected String firstName; 
 	protected String lastName;
 	protected String accountPassword;
 	protected int idNumber;

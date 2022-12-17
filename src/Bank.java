@@ -5,7 +5,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class Bank {
+public class Bank { 
 	
 	public static void main (String args[]) {
 		

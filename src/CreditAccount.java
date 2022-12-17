@@ -6,7 +6,7 @@ import org.json.simple.JSONObject;
 
 public class CreditAccount extends BankAccount{
 	
-	private int availableCredit;
+	private int availableCredit; 
 	private int creditLimit;
 
 	// Constructor for existing account
