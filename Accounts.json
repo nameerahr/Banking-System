@@ -1,0 +1,30 @@
+[
+    {
+        "firstName":"Jennifer",
+        "lastName":"Brown",
+        "password":"apple123",
+        "phoneNumber":"647-222-2222",
+        "availableCredit":"500",
+        "chequingBalance":"100",
+        "creditLimit":"1000",
+        "ID":"12345678"
+    },
+    {
+        "firstName":"John",
+        "lastName":"Doe",
+        "password":"orange789",
+        "phoneNumber":"647-123-1212",
+        "chequingBalance":"500",
+        "ID":"34449414"
+    },
+    {
+        "firstName":"Nameerah",
+        "lastName":"Razi",
+        "password":"grape1234",
+        "phoneNumber":"123-123-1234",
+        "availableCredit":"1000",
+        "chequingBalance":"9980",
+        "creditLimit":"1000",
+        "ID":"29865432"
+    }
+]
