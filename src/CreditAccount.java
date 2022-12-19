@@ -36,6 +36,9 @@ public class CreditAccount extends BankAccount{
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		
+		// Add the access to credit account to the log file
+		logAccountBehaviour("Credit account accessed successfully");
 
 		availableCredit = availableCred;
 		creditLimit = creditLim;
@@ -53,6 +56,9 @@ public class CreditAccount extends BankAccount{
 			
 		// Add the account's information to the accounts file
 		registerAccount();
+		
+		// Add the credit account creation to the log file
+		logAccountBehaviour("Credit account with credit limit $" + creditLimit + " created successfully");
 			
 		System.out.println("Credit account created for " + firstName + " " + lastName );
 		System.out.println("Your credit limit is $" + creditLimit);		
@@ -112,6 +118,9 @@ public class CreditAccount extends BankAccount{
 				// Update the accounts file with the new balance
 				updateAccount("availableCredit", Integer.toString(availableCredit));
 				
+				// Add the purchase to the log file
+				logAccountBehaviour("Purchase from credit account of $" + purchaseAmount);
+				
 				System.out.println("Purchase of $" + purchaseAmount + " successfully made. New available credit amount is $" + availableCredit);
 				break;
 			} else {
@@ -161,6 +170,9 @@ public class CreditAccount extends BankAccount{
 				updateAccount("availableCredit", Integer.toString(availableCredit));
 				updateAccount("chequingBalance", Integer.toString(chequingBalance));
 				
+				// Add the transfer to the log file
+				logAccountBehaviour("Transfer of $" + transferAmount + " from chequing to credit account");
+				
 				System.out.println("Successful transfer of $" + transferAmount + " from chequing to credit acount.");
 				break;
 			} else if (transferAmount > chequingBalance) {
@@ -193,6 +205,9 @@ public class CreditAccount extends BankAccount{
 				// Update the accounts file with the new chequing balance and available credit
 				updateAccount("availableCredit", Integer.toString(availableCredit));
 				updateAccount("chequingBalance", Integer.toString(chequingBalance));
+				
+				// Add the bill payment to the log file
+				logAccountBehaviour("Credit bill of $" + billAmount + " paid");
 				
 				System.out.println("Credit bill successfully paid.");
 			} else {
@@ -234,6 +249,9 @@ public class CreditAccount extends BankAccount{
 						break;
 			        }
 		        }
+			   	
+				// Add the deletion to the log file
+				logAccountBehaviour("Credit account deleted successfully");
 			   	
 				System.out.println("Credit account was successfully deleted. Returning to chequing account.");
 			   	return true;

@@ -1,0 +1,33 @@
+[
+    {
+        "1":"Account #27685233 created successfully at 2022-12-19 17:45:59 EST",
+        "2":"Deposit of $270 at 2022-12-19 17:46:20 EST",
+        "3":"Withdrawal of $5 at 2022-12-19 17:46:28 EST",
+        "4":"Account #27685233 logged in successfully at 2022-12-19 17:46:37 EST",
+        "5":"Credit account with credit limit $1000 created successfully at 2022-12-19 17:46:37 EST",
+        "6":"Purchase from credit account of $10 at 2022-12-19 17:46:59 EST",
+        "7":"Account #27685233 logged out successfully at 2022-12-19 17:47:09 EST",
+        "8":"Account #27685233 logged in successfully at 2022-12-19 17:52:17 EST",
+        "9":"Account #27685233 logged out successfully at 2022-12-19 17:52:19 EST",
+        "ID":"27685233"    
+    },
+    {
+        "1":"Account #26582673 created successfully at 2022-12-19 17:47:55 EST",
+        "2":"Deposit of $500 at 2022-12-19 17:48:01 EST",
+        "3":"Phone number updated to 647-111-1111 at 2022-12-19 17:48:11 EST",
+        "4":"Account #26582673 logged out successfully at 2022-12-19 17:48:18 EST",
+        "ID":"26582673"
+    },
+    {
+        "1":"Account #80294421 created successfully at 2022-12-19 17:48:46 EST",
+        "2":"Account #80294421 logged in successfully at 2022-12-19 17:48:59 EST",
+        "3":"Credit account with credit limit $500 created successfully at 2022-12-19 17:48:59 EST",
+        "4":"Purchase from credit account of $200 at 2022-12-19 17:49:11 EST",
+        "5":"Deposit of $100 at 2022-12-19 17:49:45 EST",
+        "6":"Account #80294421 logged in successfully at 2022-12-19 17:49:46 EST",
+        "7":"Credit account accessed successfully at 2022-12-19 17:49:46 EST",
+        "8":"Transfer of $10 from chequing to credit account at 2022-12-19 17:49:51 EST",
+        "9":"Account #80294421 logged out successfully at 2022-12-19 17:50:00 EST",
+        "ID":"80294421"
+    }
+]

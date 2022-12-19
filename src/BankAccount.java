@@ -1,5 +1,7 @@
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -15,6 +17,7 @@ public class BankAccount {
 	protected int idNumber;
 	private String phoneNumber;
 	protected int chequingBalance;
+	private int logNumber = 1;
 	Scanner input = new Scanner(System.in);
 	JSONParser parser = new JSONParser();
 
@@ -53,7 +56,10 @@ public class BankAccount {
 		chequingBalance = chequingBal;
 		accountPassword = password; 
 		idNumber = id;
-		phoneNumber = phone;		
+		phoneNumber = phone;
+		
+		// Add the login to the log file
+		logAccountBehaviour("Account #" + idNumber + " logged in successfully");
 	}
 	
 	// Constructor for new account
@@ -68,6 +74,9 @@ public class BankAccount {
 		
 		// Add the account's information to the accounts file
 		registerAccount();
+		
+		// Add the account creation to the log file
+		logAccountBehaviour("Account #" + idNumber + " created successfully");
 		
 		System.out.println("Account created for " + firstName + " " + lastName );
 		System.out.println("Account ID is: " + idNumber);
@@ -88,15 +97,6 @@ public class BankAccount {
 	
 	public String getLastName() {
 		return lastName;
-	}
-	
-	// Create a random account id for new chequing accounts
-	public int generateID() {
-		
-		Random rand = new Random(System.currentTimeMillis());
-		
-		// Generate a random 8 digit number for the account id
-		return (rand.nextInt(90000000) + 10000000);
 	}
 	
 	public void menuSelection() {
@@ -123,6 +123,9 @@ public class BankAccount {
 					return;
 				}
 			} else if (userSelection == 8) {
+				// Add the account log out to the log file
+				logAccountBehaviour("Account #" + idNumber + " logged out successfully");
+				
 				System.out.println("You have successfully been logged out.");
 				return;
 			} else {
@@ -156,6 +159,9 @@ public class BankAccount {
 		// Update the accounts file with the new balance.
 		updateAccount("chequingBalance", Integer.toString(chequingBalance));
 		
+		// Add the deposit to the log file
+		logAccountBehaviour("Deposit of $" + depositAmount);
+		
 		System.out.println("Amount successfully deposited. Your new balance is $" + chequingBalance);
 	}
 	
@@ -173,6 +179,9 @@ public class BankAccount {
 				
 				// Update the accounts file with the new balance
 				updateAccount("chequingBalance", Integer.toString(chequingBalance));
+				
+				// Add the withdrawal to the log file
+				logAccountBehaviour("Withdrawal of $" + withdrawalAmount);
 				
 				System.out.println("Amount successfully withdrawn. Your new balance is $" + chequingBalance);
 				break;
@@ -199,6 +208,9 @@ public class BankAccount {
 				
 				// Update the accounts file with the new number.
 				updateAccount("phoneNumber", phoneNumber);
+				
+				// Add the update to the log file
+				logAccountBehaviour("Phone number updated to " + phoneNumber);
 				
 				System.out.println("Phone number updated to: " + phoneNumber);
 				break;
@@ -300,7 +312,7 @@ public class BankAccount {
 		
 		String confirmation = input.next();
 			
-		// If confirmed, remove the account from the accounts file
+		// If confirmed, remove the account from the accounts file and the accounts log file
 		if (confirmation.equals("YES")) {
 			try {
 			    Object obj = parser.parse(new FileReader("/Users/nehanmohammed/Desktop/Accounts.json"));
@@ -323,6 +335,31 @@ public class BankAccount {
 		        }
 			   	
 				System.out.println("Account was successfully deleted.");			   	
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			
+			try {
+			    Object obj = parser.parse(new FileReader("/Users/nehanmohammed/Desktop/AccountsLog.json"));
+			   	JSONArray allAccounts = (JSONArray) obj;
+			   	
+			   	for (Object account : allAccounts) {
+			   		JSONObject currentAccount = (JSONObject) account;
+			            
+			        int accountID = Integer.parseInt(((String) currentAccount.get("ID")));
+				      
+			        if (accountID == idNumber) {
+						allAccounts.remove(currentAccount);
+						    	  
+						FileWriter file = new FileWriter("/Users/nehanmohammed/Desktop/AccountsLog.json");
+						file.write(allAccounts.toJSONString());
+						file.flush();
+						file.close();
+						break;
+			        }
+		        }
+			   	
+				System.out.println("Account was successfully deleted.");			   	
 			   	return true;
 			} catch (Exception e) {
 				System.out.println(e);
@@ -335,9 +372,10 @@ public class BankAccount {
 		return false;
 	}
 	
-	// Add the account as a new entry on file 
+	// Add the account as a new entry in the accounts file and in the accounts log file 
 	public void registerAccount() {
 
+		// Register in the accounts file
         try {
             Object obj = parser.parse(new FileReader("/Users/nehanmohammed/Desktop/Accounts.json"));
             JSONArray allAccounts = (JSONArray) obj;
@@ -353,6 +391,25 @@ public class BankAccount {
             allAccounts.add(newAccount);
 
             FileWriter file = new FileWriter("/Users/nehanmohammed/Desktop/Accounts.json");
+            file.write(allAccounts.toJSONString());
+            file.flush();
+            file.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        // Register in the accounts log file
+        try {
+            Object obj = parser.parse(new FileReader("/Users/nehanmohammed/Desktop/AccountsLog.json"));
+            JSONArray allAccounts = (JSONArray) obj;
+
+            JSONObject newAccount = new JSONObject();
+            newAccount.put("ID", Integer.toString(idNumber));
+
+            allAccounts.add(newAccount);
+
+            FileWriter file = new FileWriter("/Users/nehanmohammed/Desktop/AccountsLog.json");
             file.write(allAccounts.toJSONString());
             file.flush();
             file.close();
@@ -388,4 +445,75 @@ public class BankAccount {
 			System.out.println(e);
 		}
 	}
+	
+	// Update accounts log with account behaviour
+	public void logAccountBehaviour(String action) {
+			
+		try {
+		   	Object obj = parser.parse(new FileReader("/Users/nehanmohammed/Desktop/AccountsLog.json"));
+			JSONArray allAccounts = (JSONArray) obj;
+			    	
+		   	for (Object account : allAccounts) {
+		   		JSONObject currentAccount = (JSONObject) account;
+			            
+			    int accountID = Integer.parseInt(((String) currentAccount.get("ID")));
+					      
+			    if (accountID == idNumber) {
+			    	currentAccount.put(getLogNumber(), action + " at " + getDate());
+					    	  
+			    	FileWriter file = new FileWriter("/Users/nehanmohammed/Desktop/AccountsLog.json");
+			        file.write(allAccounts.toJSONString());
+			        file.flush();
+			       	file.close();
+			       	break;
+			    }
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	// Create a random account id for new chequing accounts
+	public int generateID() {
+		
+		Random rand = new Random(System.currentTimeMillis());
+		
+		// Generate a random 8 digit number for the account id
+		return (rand.nextInt(90000000) + 10000000);
+	}
+	
+	// Get next log number
+	public int getLogNumber(){
+		
+		try {
+		   	Object obj = parser.parse(new FileReader("/Users/nehanmohammed/Desktop/AccountsLog.json"));
+			JSONArray allAccounts = (JSONArray) obj;
+			    	
+		   	for (Object account : allAccounts) {
+		   		JSONObject currentAccount = (JSONObject) account;
+			            
+			    int accountID = Integer.parseInt(((String) currentAccount.get("ID")));
+					      
+			    if (accountID == idNumber) {
+			    	while (currentAccount.containsKey(Integer.toString(logNumber))) {
+					    logNumber++;
+			    	}
+			    						    	  
+			       	break;
+			    }
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		return logNumber;
+	}
+	
+	// Get the current date
+	public String getDate() {
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+		Date date = new Date(System.currentTimeMillis());
+		return formatter.format(date);
+	}	
 }

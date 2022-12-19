@@ -6,7 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/nehanmohammed/Desktop/BankSystem/java-json.jar"/>
-	<classpathentry kind="lib" path="/Users/nehanmohammed/Desktop/BankSystem/json-simple-1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/nehanmohammed/Desktop/BankManagementSystem/Imported Libraries/java-json.jar"/>
+	<classpathentry kind="lib" path="/Users/nehanmohammed/Desktop/BankManagementSystem/Imported Libraries/json-simple-1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
