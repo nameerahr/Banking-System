@@ -65,7 +65,7 @@ public class Bank {
 				}
 			} else if (userSelection == 3) {
 				System.out.println("Thank you for banking with us.");
-				System.exit(0);
+				return;
 			} else {
 				System.out.println("Please select a valid option from the menu.");
 			}
